@@ -1,25 +1,33 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-  </div>
+    <div id="app" class="vh-100 text-light">
+        <NavBar></NavBar>
+
+        <b-container fluid="md">
+            <router-view></router-view>
+        </b-container>
+    </div>
 </template>
 
 <script>
+    import NavBar from "@/components/NavBar";
 
-export default {
-  name: 'App',
-  components: {
-  }
-}
+    export default {
+        name: 'App',
+        components: {
+            NavBar
+        }
+    }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    #app {
+        font-family: Roboto, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #181818;
+    }
+
+    .wdth {
+        width: 400px;
+    }
 </style>
