@@ -11,6 +11,16 @@ export default new Router({
             path: '/',
             name: 'Home',
             component: Home
+        },
+        {
+            path: '/watch',
+            name: 'WatchVideo',
+            component: () => import("@/views/VideoView")
+        },
+        {
+            path: '/upload',
+            name: 'UploadVideo',
+            component: () => import("@/views/UploadVideo")
         }
     ]
 })

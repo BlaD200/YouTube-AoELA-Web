@@ -1,16 +1,23 @@
 <template>
     <div id="nav-bar">
         <b-navbar toggleable="md" type="dark">
-            <b-navbar-brand href="#">YouTube</b-navbar-brand>
+            <b-navbar-brand href="/">YouTube</b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
             <b-collapse id="nav-collapse" is-nav>
+                <b-navbar-nav>
+<!--                    <router-link :to="{name: 'UploadVideo'}" role="button">-->
+                        <b-nav-item href="/upload">
+                            Upload
+                        </b-nav-item>
+<!--                    </router-link>-->
+                </b-navbar-nav>
 
                 <b-navbar-nav class="ml-auto mr-auto pl-md-4 mr-md-5">
                     <b-nav-form>
-                        <b-form-input id="search-form" size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-                        <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+                        <b-form-input v-model="search" id="search-form" size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+                        <b-button @click.prevent="searchVideos" size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
                     </b-nav-form>
                 </b-navbar-nav>
 
@@ -32,7 +39,17 @@
 
 <script>
     export default {
-        name: "Navbar"
+        name: "Navbar",
+        data(){
+            return {
+                search: ""
+            }
+        },
+        methods: {
+            searchVideos(){
+                window.location = ('/?search='+this.search)
+            }
+        }
     }
 </script>
 

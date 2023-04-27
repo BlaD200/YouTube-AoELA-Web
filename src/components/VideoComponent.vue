@@ -1,18 +1,23 @@
 <template>
     <div @click="goToVideo" class="video">
-        <div class="embed-responsive embed-responsive-16by9">
-            <video class="embed-responsive-item"
-                   type="video/mp4"
-                   :src="src"
-                   :controls="controls"
-            >
-                <p>Your browser doesn't support site content</p>
-            </video>
+        <div>
+            <div class="embed-responsive embed-responsive-16by9">
+                <video class="embed-responsive-item"
+                       type="video/mp4"
+                       :src="src"
+                       :controls="controls"
+                >
+                    <p>Your browser doesn't support site content</p>
+                </video>
+            </div>
+            <div class="ml-2 mr-3 mt-2">
+                <h3 class="title">{{video.name}}</h3>
+                <a @click="goToAuthor" class="author" :href="urlToAuthor">{{video.authorUsername}}</a>
+            </div>
+            <router-link :to="{name: 'WatchVideo', query: {hash: video.hash, resolution: video.resolutionHeight}}"
+                         class="stretched-link"></router-link>
         </div>
-        <div class="ml-2 mr-3 mt-2">
-            <h3 class="title">{{title}}</h3>
-            <a @click="goToAuthor" class="author" :href="urlToAuthor">{{author}}</a>
-        </div>
+
     </div>
 
 </template>
@@ -24,9 +29,7 @@
         props: {
             src: String,
             controls: Boolean,
-            urlToVideo: String,
-            title: String,
-            author: String,
+            video: Object,
             urlToAuthor: String
         },
         data: function () {
@@ -38,12 +41,17 @@
             goToVideo() {
                 if (!this.isGoToAuthor) {
                     console.log("Clicked video div")
-                    window.location = (this.urlToVideo);
+                    // window.location = (this.urlToVideo);
                 }
             },
             goToAuthor() {
                 console.log("Clicked author");
                 this.isGoToAuthor = true;
+            }
+        },
+        computed: {
+            description() {
+                return this.video.description === null ? "" : this.video.description
             }
         }
     }
@@ -68,9 +76,20 @@
     .author {
         color: #aaa;
         text-decoration: none;
+        position: relative;
+        z-index: 10;
     }
 
     .author:hover {
         color: white;
     }
+
+    .stretched-link::after {
+        margin: 0 1rem;
+        z-index: 1;
+    }
+
+    /*.stretched-link:hover::after {*/
+    /*    border: 1px solid aliceblue;*/
+    /*}*/
 </style>

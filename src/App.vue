@@ -1,10 +1,12 @@
 <template>
     <div id="app" class="vh-100 text-light">
-        <NavBar></NavBar>
+        <NavBar @searchVideos="searchVideo"></NavBar>
 
-        <b-container fluid="md">
-            <router-view></router-view>
-        </b-container>
+        <div id="bg-custom">
+            <b-container fluid="md">
+                <router-view></router-view>
+            </b-container>
+        </div>
     </div>
 </template>
 
@@ -15,6 +17,12 @@
         name: 'App',
         components: {
             NavBar
+        },
+        methods: {
+            searchVideo(input){
+                console.log(input);
+                window.location = ({path: "/", query: {videoName: input}})
+            }
         }
     }
 </script>
@@ -27,7 +35,7 @@
         background-color: #181818;
     }
 
-    .wdth {
-        width: 400px;
+    #bg-custom {
+        background-color: #181818;
     }
 </style>
