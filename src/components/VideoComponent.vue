@@ -1,15 +1,20 @@
 <template>
     <div @click="goToVideo" class="video">
         <div>
-            <div class="embed-responsive embed-responsive-16by9">
-                <video class="embed-responsive-item"
-                       type="video/mp4"
-                       :src="src"
-                       :controls="controls"
-                >
-                    <p>Your browser doesn't support site content</p>
-                </video>
+            <div id="introVid1" class="video-container">
+                <img :src="src" />
             </div>
+<!--            <div class="embed-responsive embed-responsive-16by9">-->
+<!--                <iframe class="embed-responsive-item" :src="src" allowfullscreen></iframe>-->
+<!--&lt;!&ndash;                <iframe class="embed-responsive-item" :src="src"></iframe>&ndash;&gt;-->
+<!--&lt;!&ndash;                <video class="embed-responsive-item"&ndash;&gt;-->
+<!--&lt;!&ndash;                       type="video/mp4"&ndash;&gt;-->
+<!--&lt;!&ndash;                       :src="src"&ndash;&gt;-->
+<!--&lt;!&ndash;                       :controls="controls"&ndash;&gt;-->
+<!--&lt;!&ndash;                >&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p>Your browser doesn't support site content</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                </video>&ndash;&gt;-->
+<!--            </div>-->
             <div class="ml-2 mr-3 mt-2">
                 <h3 class="title">{{video.name}}</h3>
                 <a @click="goToAuthor" class="author" :href="urlToAuthor">{{video.authorUsername}}</a>
@@ -58,6 +63,27 @@
 </script>
 
 <style scoped>
+
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        border: 1px solid #111;
+        margin: 2% 0;
+        cursor: pointer;
+    }
+
+    .video-container img,
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .video-container img:hover {
+        opacity: 0.8;
+    }
     .video {
         cursor: pointer;
     }

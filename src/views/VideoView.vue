@@ -63,27 +63,29 @@ export default {
 
         console.log(this.$route.params, this.$route.query)
         this.$http
-            .get(videoRequestUrl(this.$route.query.hash, this.$route.query.resolution))
+            .get(`${this.apiURL}/resolutions/${this.$route.query.hash}`)
             .then(response => {
                 console.log(response.data)
-                this.video = response.data;
-                this.resolutionLoaded = response.data.resolutionHeight
+                this.resolutionsAvailable = response.data
+                if (this.$route.query.resolution){
+                    this.resolutionLoaded = this.$route.query.resolution
+                } else {
+                    this.resolutionLoaded = this.resolutionsAvailable.at(-1)
+                }
+                // response.data.forEach(video => {
+                //     if (video.hash === this.$route.query.hash) {
+                //         this.resolutionsAvailable.push(video.resolutionHeight)
+                //     }
+                // })
+                this.numberOfElements += response.data
             })
             .then(() => {
-                let config = {
-                    'params':
-                        {'videoName': this.video.name}
-                }
                 this.$http
-                    .get(this.apiURL, config)
+                    .get(videoRequestUrl(this.$route.query.hash, this.resolutionLoaded))
                     .then(response => {
-                        console.log(response.data.content)
-                        response.data.content.forEach(video => {
-                            if (video.hash === this.$route.query.hash) {
-                                this.resolutionsAvailable.push(video.resolutionHeight)
-                            }
-                        })
-                        this.numberOfElements += response.data.numberOfElements
+                        console.log(response.data)
+                        this.video = response.data;
+                        // this.resolutionLoaded = response.data.resolutionHeight
                     })
                     .catch(error => {
                         this.handleError(error)
@@ -105,7 +107,8 @@ export default {
     },
     methods: {
         getUrlToVideo() {
-            return `${this.apiURL}/stream?videoHash=${this.$route.query.hash}&resolutionHeight=${this.$route.query.resolution}`
+            console.log(this.resolutionLoaded)
+            return `${this.apiURL}/stream?videoHash=${this.$route.query.hash}&resolutionHeight=${this.resolutionLoaded}`
         },
         changeResolution(res) {
             window.location = `http://localhost:8080/watch?hash=${this.$route.query.hash}&resolution=${res}`

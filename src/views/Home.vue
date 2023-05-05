@@ -135,7 +135,7 @@
             },
             getUrlToVideo(video) {
                 console.log(video.hash);
-                return `${this.apiURL}/stream?videoHash=${video.hash}&resolutionHeight=${video.resolutionHeight}`
+                return `${this.apiURL}/thumbnail/${video.hash}`
             }
         }
     }
